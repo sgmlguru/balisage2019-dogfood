@@ -107,9 +107,10 @@
                     <section>
                         <!-- First year, PANIC at the hotel in CPH: eXist-DB, XForms, XQ, XSL-FO for invoice -->
                         <!-- Simple overview of the solution -->
+                        <h3>2018 Solution</h3>
                         
                         <div>
-                            <img src="img/reg-form.png" alt="MUK registration form" style="width: 30%; vertical-align: middle;"/>
+                            <img src="img/reg-form.png" alt="MUK registration form" style="width: 35%; vertical-align: middle;"/>
                             <img src="img/kisspng-arrow-icon-arrow-right-5a8b1190a17ca5.2434020115190634406615.jpg" alt="Right arrow" style="width: 5%; vertical-align: middle;"/>
                             <img src="img/existdb.gif" alt="eXist-DB logo" style="width: 30%; vertical-align: middle;"/>
                             <img src="img/kisspng-arrow-icon-arrow-right-5a8b1190a17ca5.2434020115190634406615.jpg" alt="Right arrow" style="width: 5%; vertical-align: middle;"/>
@@ -139,23 +140,74 @@
                 
                 <!-- START of PayPal Experience -->
                 
-                <!-- How *do* you get paid? -->
-                <!-- Paypal and how it works, the back and forth -->
-                
                 <section>
                     
                     <!-- So, how do you get paid? -->
-                    <section>
+                    <!--<section>
                         <h3>So, How Do You Get Paid?</h3>
-                    </section>
+                    </section>-->
                     
                     <!-- Overview -->
                     <section data-background="img/paypal-checkout-overview-pay-now-orders-api.svg" data-background-size="55%">
                         
+                        <aside class="notes">
+                            <p>Paypal and how it works, the back and forth</p>
+                        </aside>
                     </section>
+                    
+                    
+                    <section>
+                        <h3>Off the PayPal Website...</h3>
+                        
+                        <pre>
+                            <code class="xml" data-trim data-noescape>&lt;script src="https://www.paypal.com/sdk/js?client-id=sb"/>
+&lt;script>paypal.Buttons().render('body');&lt;/script>
+...
+&lt;form 
+    action="https://www.paypal.com/cgi-bin/webscr" 
+    method="post">
+  &lt;input 
+        type="hidden" 
+        name="cmd" 
+        value="_xclick"/>
+&lt;/form>
+                            </code>
+                        </pre>
+                        
+                        <aside class="notes">
+                            <p>Looks simple enough, right?</p>
+                            <p>Copying and pasting is a time-honoured development method</p>
+                        </aside>
+                    </section>
+                    
+                    
+                    <section>
+                        <p>Add your own variables?</p>
+                        
+                        <pre>
+                            <code class="xml" data-trim data-noescape>&lt;INPUT TYPE="hidden" NAME="currency_code" value="GBP"/></code>
+                        </pre>
+                        
+                        <img class="fragment" src="img/copypasta-stackoverflow.jpg" alt="Copy/paste from Stack Overflow"/>
+                        
+                        <aside class="notes">
+                            <p>Copying and pasting is a time-honoured development method</p>
+                        </aside>
+                    </section>
+                    
+                    
+                    <!-- Problem is, this does not allow for different amounts -->
+                    <section>
+                        <h3>No Custom Amounts</h3>
+                        
+                        <img src="img/wilda.jpg" alt="Hungry dog" style="width: 30%"/>
+                    </section>
+                    
                     
                     <!-- Slightly more advanced - how hard can it be? -->
                     <!-- So plan #1 - how hard can it be? -->
+                    
+                    
                     
                     <!-- Layout #1 (of the new solution) -->
                     
@@ -165,14 +217,98 @@
                 
                 
                 
+                <!-- START of Generating Buttons -->
+                
+                <section>
+                    
+                    <!-- Copying and pasting from Stack Overflow (and Paypal) -->
+                    <!-- Different fees, discounts, etc -->
+                    
+                    <section>
+                        <h3>Generating Button Code</h3>
+                        
+                        <pre class="stretch">
+                            <code class="xml" data-trim data-noescape>&lt;button id="early-bird-sandbox">
+    &lt;form
+        action="https://www.sandbox.paypal.com/cgi-bin/webscr"
+        method="post"
+        target="_top">
+        &lt;input
+            type="hidden"
+            name="cmd"
+            value="_s-xclick"/>
+        &lt;input
+            type="hidden"
+            name="hosted_button_id"
+            value="PM4DRL6BX3226"/>
+        &lt;input
+            type="image"
+            src="https://www.sandbox.paypal.com/en_US/GB/i/btn/btn_buynowCC_LG.gif"
+            border="0"
+            name="submit"
+            alt="PayPal – The safer, easier way to pay online!"/>
+        &lt;img
+            alt=""
+            border="0"
+            src="https://www.sandbox.paypal.com/en_GB/i/scr/pixel.gif"
+            width="1"
+            height="1"/>
+    &lt;/form>
+&lt;/button></code>
+                        </pre>
+                    </section>
+                    
+                    
+                    <section>
+                        <h3>An Aside</h3>
+                        <h5>Sandbox/Live</h5>
+                        
+                        <!-- Image? -->
+                    </section>
+                    
+                    
+                    <section>
+                        <h3>Lots of Buttons</h3>
+                        
+                        <pre class="stretch">
+                            <code class="xml" data-trim data-noescape>&lt;buttons>
+    
+    &lt;button id="early-bird-sandbox">
+        ...
+    &lt;/button>
+    
+    &lt;button id="academic-sandbox">
+        ...
+    &lt;/button>
+    
+    &lt;button id="pc-sandbox">
+        ...
+    &lt;/button>
+    
+    &lt;button id="full-sandbox">
+        ...
+    &lt;/button>
+    
+    ...
+    
+&lt;/buttons></code>
+                        </pre>
+                    </section>
+                    
+                    
+                    <!-- Thankfully I found a third option -->
+                    <section data-background="img/chili-water.jpg" data-background-size="100%">
+                        <div>
+                            <h3 class="fragment" style="margin-top: 5%; color: white;">Thankfully I Found A Third Option</h3>
+                        </div>
+                    </section>
+                    
+                </section>
+                
+                <!-- END of Generating Buttons -->
                 
                 
                 
-                
-                
-                <!-- Copying and pasting from Stack Overflow (and Paypal) -->
-                
-                <!-- Different fees, discounts, etc -->
                 
                 <!-- IPN listener and asynchronous comms -->
                 
