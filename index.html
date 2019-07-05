@@ -323,16 +323,187 @@
                     </section>
                     
                     
+                    <!-- The button with amount -->
+                    <section>
+                        <pre class="stretch">
+                            <code class="javascript">&lt;script>
+  paypal.Buttons({
+    createOrder: function(data, actions) {
+      // Set up the transaction
+      return actions.order.create({
+        purchase_units: [{
+          amount: {
+            value: '0.01'
+          }
+        }]
+      });
+    }
+  }).render('#paypal-button-container');
+&lt;/script></code>
+                        </pre>
+                        
+                        <aside class="notes">
+                            <p>See that thing in the middle? AMOUNT?</p>
+                        </aside>
+                    </section>
+                    
+                    
+                    <!-- Injecting XQuery into JavaScript -->
+                    <section>
+                        <pre>
+                            <code class="javascript">amount: {
+    value: '0.01'
+          }</code>
+                        </pre>
+                        
+                        <pre class="fragment">
+                            <code class="javascript">amount: {
+    value: '{$amount}'
+          }</code>
+                        </pre>
+                        
+                        <aside class="notes">
+                            <p>Why not inject XQuery?</p>
+                            <p>So, in a similar vein...</p>
+                        </aside>
+                    </section>
+                    
+                    
+                    <section>
+                        <h3>A Better Button</h3>
+                        <pre class="stretch">
+                            <code class="javascript">&lt;script>
+    
+  paypal.Buttons({{
+    createOrder: function(data, actions) {{
+      return actions.order.create({{
+        purchase_units: [{{
+          amount: {{
+            value: '{$amount}'
+          }}
+        }}]
+      }});
+    }},
+    onApprove: function(data, actions) {{
+      return actions.order.capture().then(function(details) {{
+        // alert('Transaction completed by ' + details.payer.name.given_name);
+        
+        actions.redirect('{$muk:config//domain/text()}/exist/rest/db/apps/MUK-reg/xq/thanks.xquery?tmp-file={$registered}');
+        // Call your server to save the transaction
+        return fetch('{$muk:config//domain/text()}/exist/restxq/paypal-transaction-complete', {{
+          method: 'post',
+          body: JSON.stringify({{
+            orderID: data.orderID,
+            custom: {string($uid)}
+          }})
+        }});
+      }});
+    }},
+    
+
+  onCancel: function(data, actions) {{
+    actions.redirect('{$muk:config//domain/text()}/exist/rest/db/apps/MUK-reg/xq/cancel.xquery');
+    }}
+  }}).render('#paypal-button-container');
+  
+&lt;/script></code>
+                        </pre>
+                        
+                        <aside class="notes">
+                            <p>This injecting XQuery thing turned out to be useful</p>
+                            <p>Allows me to include what happens upon task completion (or cancel)</p>
+                        </aside>
+                    </section>
+                    
+                    
+                    <section>
+                        <pre class="stretch">
+                            <code class="javascript">onApprove: function(data, actions) {{
+  return actions.order.capture().then(function(details) {{
+    // alert('Transaction completed by ' + details.payer.name.given_name);
+    
+    actions.redirect(
+        '{$muk:config//.../thanks.xquery?tmp-file={$registered}'
+    );
+    // Call your server to save the transaction
+    return fetch(
+        '{$muk:config//domain/text()}/exist/restxq/paypal-transaction-complete', {{
+      method: 'post',
+      body: JSON.stringify({{
+        orderID: data.orderID,
+        custom: {string($uid)}
+      }})
+    }});
+  }});
+}},
+
+onCancel: function(data, actions) {{
+actions.redirect('{$muk:config//.../cancel.xquery');
+}}
+}}).render('#paypal-button-container');
+</code>
+                        </pre>
+                        
+                        <aside class="notes">
+                            <p>Note <code>thanks.xquery</code></p>
+                            <p>Note <code>cancel.xquery</code></p>
+                        </aside>
+                    </section>
+                    
+                    
+                    <!-- Payment confirmation and IPN message flow -->
+                    <section>
+                        
+                        <img src="img/paypal-graphic.jpg" alt="PayPal IPN workflow" style="width: 65%"/>
+                        
+                        <aside class="notes">
+                            <ol>
+                                <li>
+                                    <p>Payment completes on PayPal</p>
+                                </li>
+                                <li>
+                                    <p>PayPal confirms with <strong>IPN</strong></p>
+                                </li>
+                                <li>
+                                    <p><strong>Listener</strong> catches IPN</p>
+                                </li>
+                                <li>
+                                    <p>Listener sends back copy of IPN (etc)</p>
+                                </li>
+                            </ol>
+                        </aside>
+                        
+                    </section>
+                    
+                    
                     <!-- IPN listener and asynchronous comms -->
                     <section>
-                        <img src="img/paypal-ipn.jpg" alt="PayPal IPN messages"/>
-                        <p class="fragment">Um, what's a listener?</p>
+                        <img src="img/contact-jodie-foster.jpg" alt="Contact - Jodie Foster listening"/>
+                        <p>Um, what's a listener?</p>
+                        
+                        <aside class="notes">
+                            <p>I'd no idea what a lister is, beyond the most basic idea</p>
+                        </aside>
                     </section>
                     
                     
                     <!-- Something about failed IPN listener attempts? -->
+                    
+                    
+                    <!-- Example -->
                     <section>
-                        <img src="img/contact-jodie-foster.jpg" alt="Contact - Jodie Foster listening"/>
+                        <h3>IPN Message</h3>
+                        
+                        <pre class="stretch">
+                            <code class="http" data-trim data-noescape>verify_sign=AtkOfCXbDm2hu0ZELryHFjY-Vb7PAUvS6nMXgysbElEn9v-1XcmSoGtf&amp;
+payer_email=gpmac_1231902590_per%40paypal.com&amp;
+txn_id=61E67681CH3238416&amp;payment_type=instant&amp;last_name=User&amp;
+address_state=CA&amp;receiver_email=gpmac_1231902686_biz%40paypal.com&amp;payment_fee=0.88&amp;
+receiver_id=S8XGHLYDW9T3S&amp;txn_type=express_checkout&amp;item_name=&amp;
+mc_currency=USD&amp;item_number=&amp;residence_country=US&amp;test_ipn=1&amp;
+handling_amount=0.00&amp;transaction_subject=&amp;payment_gross=19.95&amp;shipping=0.00</code>
+                        </pre>
+                        
                     </section>
                     
                     
@@ -445,6 +616,7 @@
 					{ src: 'plugin/markdown/marked.js' },
 					{ src: 'plugin/markdown/markdown.js' },
 					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
 					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
 				]
 			});
