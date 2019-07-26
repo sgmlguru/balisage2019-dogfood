@@ -353,13 +353,13 @@
                         <pre>
                             <code class="javascript">amount: {
     value: '0.01'
-          }</code>
+}</code>
                         </pre>
                         
                         <pre class="fragment">
                             <code class="javascript">amount: {
     value: '{$amount}'
-          }</code>
+}</code>
                         </pre>
                         
                         <aside class="notes">
@@ -372,38 +372,14 @@
                     <section>
                         <h3>A Better Button</h3>
                         <pre class="stretch">
-                            <code class="javascript">&lt;script>
-    
+                            <code class="xml">&lt;script>
   paypal.Buttons({{
-    createOrder: function(data, actions) {{
-      return actions.order.create({{
-        purchase_units: [{{
-          amount: {{
-            value: '{$amount}'
-          }}
-        }}]
-      }});
-    }},
-    onApprove: function(data, actions) {{
-      return actions.order.capture().then(function(details) {{
-        // alert('Transaction completed by ' + details.payer.name.given_name);
-        
-        actions.redirect('{$muk:config//domain/text()}/exist/rest/db/apps/MUK-reg/xq/thanks.xquery?tmp-file={$registered}');
-        // Call your server to save the transaction
-        return fetch('{$muk:config//domain/text()}/exist/restxq/paypal-transaction-complete', {{
-          method: 'post',
-          body: JSON.stringify({{
-            orderID: data.orderID,
-            custom: {string($uid)}
-          }})
-        }});
-      }});
-    }},
+    createOrder: function(data, actions) {{...;}},
     
-
-  onCancel: function(data, actions) {{
-    actions.redirect('{$muk:config//domain/text()}/exist/rest/db/apps/MUK-reg/xq/cancel.xquery');
-    }}
+    onApprove: function(data, actions) {{...}},
+    
+    onCancel: function(data, actions) {{...}}
+    
   }}).render('#paypal-button-container');
   
 &lt;/script></code>
@@ -417,10 +393,9 @@
                     
                     
                     <section>
-                        <pre class="stretch">
+                        <pre class="stretch" style="font-size: 16pt;">
                             <code class="javascript">onApprove: function(data, actions) {{
   return actions.order.capture().then(function(details) {{
-    // alert('Transaction completed by ' + details.payer.name.given_name);
     
     actions.redirect(
         '{$muk:config//.../thanks.xquery?tmp-file={$registered}'
@@ -438,7 +413,7 @@
 }},
 
 onCancel: function(data, actions) {{
-actions.redirect('{$muk:config//.../cancel.xquery');
+    actions.redirect('{$muk:config//.../cancel.xquery');
 }}
 }}).render('#paypal-button-container');
 </code>
@@ -453,6 +428,8 @@ actions.redirect('{$muk:config//.../cancel.xquery');
                     
                     <!-- Payment confirmation and IPN message flow -->
                     <section>
+                        
+                        <h3>But First, You Need to Verify</h3>
                         
                         <img src="img/paypal-graphic.jpg" alt="PayPal IPN workflow" style="width: 65%"/>
                         
@@ -479,7 +456,7 @@ actions.redirect('{$muk:config//.../cancel.xquery');
                     <!-- IPN listener and asynchronous comms -->
                     <section>
                         <img src="img/contact-jodie-foster.jpg" alt="Contact - Jodie Foster listening"/>
-                        <p>Um, what's a listener?</p>
+                        <p>Um, what's a "listener?"</p>
                         
                         <aside class="notes">
                             <p>I'd no idea what a lister is, beyond the most basic idea</p>
