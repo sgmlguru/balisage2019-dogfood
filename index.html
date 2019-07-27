@@ -182,8 +182,6 @@
                     
                     
                     <section>
-                        <p>Add your own variables?</p>
-                        
                         <pre>
                             <code class="xml" data-trim data-noescape>&lt;INPUT TYPE="hidden" NAME="currency_code" value="GBP"/></code>
                         </pre>
@@ -191,6 +189,7 @@
                         <img class="fragment" src="img/copypasta-stackoverflow.jpg" alt="Copy/paste from Stack Overflow"/>
                         
                         <aside class="notes">
+                            <p>Add your own variables?</p>
                             <p>Copying and pasting is a time-honoured development method</p>
                         </aside>
                     </section>
@@ -201,6 +200,13 @@
                         <h3>No Custom Amounts</h3>
                         
                         <img src="img/wilda.jpg" alt="Hungry dog" style="width: 30%"/>
+                        
+                        <aside class="notes">
+                            <p>Copy/paste will only get you so far</p>
+                            <p>I must be copying and pasting from the wrong place</p>
+                            
+                            <p>Looking at the PayPal docs, I found a way to *generate* buttons with custom amounts</p>
+                        </aside>
                     </section>
                     
                     
@@ -256,6 +262,11 @@
     &lt;/form>
 &lt;/button></code>
                         </pre>
+                        
+                        <aside class="notes">
+                            <p>This is a generated button</p>
+                        </aside>
+                        
                     </section>
                     
                     
@@ -263,7 +274,12 @@
                         <h3>An Aside</h3>
                         <h5>Sandbox/Live</h5>
                         
-                        <!-- Image? -->
+                        <!-- Image of a sandbox? -->
+                        
+                        <aside class="notes">
+                            <p>Two envs, one for testing, one for live</p>
+                            <p>So two buttons for every amount (test/live)</p>
+                        </aside>
                     </section>
                     
                     
@@ -293,6 +309,10 @@
     
 &lt;/buttons></code>
                         </pre>
+                        
+                        <aside class="notes">
+                            <p>A LOT of buttons</p>
+                        </aside>
                     </section>
                     
                     
@@ -301,6 +321,11 @@
                         <div>
                             <h3 class="fragment" style="margin-top: 5%; color: white;">Thankfully I Found A Third Option</h3>
                         </div>
+                        
+                        <aside class="notes">
+                            <p>PayPal has lots of documentation</p>
+                            <p>If you actually read them, you find a step-by-step with code examples</p>
+                        </aside>
                     </section>
                     
                 </section>
@@ -453,20 +478,6 @@ onCancel: function(data, actions) {{
                     </section>
                     
                     
-                    <!-- IPN listener and asynchronous comms -->
-                    <section>
-                        <img src="img/contact-jodie-foster.jpg" alt="Contact - Jodie Foster listening"/>
-                        <p>Um, what's a "listener?"</p>
-                        
-                        <aside class="notes">
-                            <p>I'd no idea what a lister is, beyond the most basic idea</p>
-                        </aside>
-                    </section>
-                    
-                    
-                    <!-- Something about failed IPN listener attempts? -->
-                    
-                    
                     <!-- Example -->
                     <section>
                         <h3>IPN Message</h3>
@@ -481,7 +492,85 @@ mc_currency=USD&amp;item_number=&amp;residence_country=US&amp;test_ipn=1&amp;
 handling_amount=0.00&amp;transaction_subject=&amp;payment_gross=19.95&amp;shipping=0.00</code>
                         </pre>
                         
+                        
+                        <aside class="notes">
+                            <p>The message from PayPal looks like this...</p>
+                            <p>OK, seems logical</p>
+                            <p>EXCEPT</p>
+                        </aside>
+                        
                     </section>
+                    
+                    
+                    <!-- IPN listener and asynchronous comms -->
+                    <section>
+                        <img src="img/contact-jodie-foster.jpg" alt="Contact - Jodie Foster listening"/>
+                        <p>Um, what's a "listener?"</p>
+                        
+                        <aside class="notes">
+                            <p>I'd no idea what a listener is, beyond the concept</p>
+                        </aside>
+                    </section>
+                    
+                    
+                    <!-- Something about failed IPN listener attempts? -->
+                    <section>
+                        <pre class="stretch">
+                            <code class="xml" data-trim data-noescape>&lt;form
+    target="_new"
+    method="post"
+    action="http://localhost:8080/exist/rest/db/apps/test/test.xquery"
+    enctype="multipart/form-data">
+
+    &lt;input type="hidden" name="payer_id" value="LPLWNMTBWMFAY"/>
+    &lt;input type="hidden" name="payment_status" value="Completed"/>
+    
+    &lt;!-- code for other variables to be tested ... -->
+    &lt;input type="hidden" name="custom" value="my_info"/>
+    
+    &lt;input type="submit"/>
+&lt;/form></code>
+                        </pre>
+                        
+                        <aside class="notes">
+                            <p>PP provides an IPN Simulator</p>
+                            <p>So I wrote this form, pointing out THIS XQUERY...</p>
+                        </aside>
+                    </section>
+                    
+                    
+                    <section>
+                        <pre class="stretch">
+                            <code class="xquery" data-trim data-noescape>xquery version "3.1";
+declare namespace exist = "http://exist.sourceforge.net/NS/exist";
+declare namespace xmldb="http://exist-db.org/xquery/xmldb";
+declare namespace request="http://exist-db.org/xquery/request";
+declare option exist:serialize "method=xml media-type=text/xml indent=yes";
+
+let $post-data := request:get-data()
+
+return
+&lt;post-data>
+   {$post-data}
+&lt;/post-data></code>
+                        </pre>
+                        
+                        <aside class="notes">
+                            <p>It simply echos its input</p>
+                            <p>This did what it was supposed to</p>
+                        </aside>
+                    </section>
+                    
+                    
+                    <section>
+                        <!-- Image of a deaf old man? -->
+                        
+                        <aside class="notes">
+                            <p>But no matter what, I couldn't get PP's IPN Simulator to work</p>
+                        </aside>
+                    </section>
+                    
+                    
                     
                     
                     <!-- Adam to the rescue -->
@@ -497,15 +586,99 @@ handling_amount=0.00&amp;transaction_subject=&amp;payment_gross=19.95&amp;shippi
                     
                     
                     <!-- About Adam's listener -->
+                    <section>
+                        <pre class="stretch">
+                            <code class="http" data-trim data-noescape></code>
+                        </pre>
+                        
+                        <aside class="notes">
+                            <p>Basically a RESTXQ version of one of the listeners listed as examples</p>
+                            <p>While the IPN Sim worked, I still couldn't extract info locally</p>
+                        </aside>
+                    </section>
                     
                     
-                    <!-- Still no luck, so next attempt: XQ injections to HTML with Javascript -->
+                    <!-- Encode type -->
+                    <section>
+                        <pre class="stretch">
+                            <code class="http" data-trim data-noescape>application/x-www-form-urlencoded</code>
+                        </pre>
+                        
+                        <aside class="notes">
+                            <p>The diff between what PP uses and what I use</p>
+                            <p>My ignorance shows: these are basically key/value pairs (remember the IPN message?)</p>
+                            
+                            <p>As far as I can determine, though, the listener should work</p>
+                            <p>So based on what Adam wrote and my understanding of it, I was able to eventually produce this</p>
+                        </aside>
+                    </section>
+                    
+                    
+                    <!-- My dead simple listener -->
+                    <section>
+                        <pre class="stretch">
+                            <code class="xquery" data-trim data-noescape>>declare
+    %rest:POST("{$body}")
+    %rest:path("/paypal-transaction-complete")
+function pay:listener($body) {
+    let $json := fn:parse-json(util:base64-decode($body))
+
+    return
+    xmldb:store($muk:transactions-collection-uri,concat('uid-',$json?custom,'.xml'),
+    &lt;transaction tstamp='{current-dateTime()}' 
+        orderID='{$json?orderID}'
+        userID='{$json?custom}'/>),
+    pay:all-good()
+};
+
+declare function pay:all-good(){
+    (: Reply with an empty 200 response to indicate to paypal the IPN was received correctly. :)
+        (
+            &lt;rest:response>
+                 &lt;http:response status="200" reason="OK"/>
+            &lt;/rest:response>,
+            ""
+        )
+};</code>
+                        </pre>
+                        
+                        <aside class="notes">
+                            <p>This, of course, is not a full listener</p>
+                            <p>A *listener* listens UNTIL it gets the OK and a verbatim copy of the IPN (which it sends back with an added string)</p>
+                            <p>This does not repeat anything, it merely says OK and saves two parameters</p>
+                            <p>Still don't fully understand this; did I mention my ignorance?</p>
+                        </aside>
+                    </section>
+                    
                     
                     <!-- Plan #2, it works! -->
+                    <section>
+                        
+                        <!-- Image or code showing the working version -->
+                        <!-- Mickey Mouse mastering a spell? -->
+                        
+                        <aside class="notes">
+                            <p>NEVERTHELESS, this gives me the order ID and the user ID (which I use to couple the transaction with the delegate)</p>
+                        </aside>
+                    </section>
                     
                     <!-- Layout #2 -->
-                    
-                    <!-- Revisions, additions -->
+                    <section>
+                        <!-- Image of entire procedure, with form, thanks.xquery, cancel.xquery, listener, email, invoice, etc -->
+                        
+                        <aside class="notes">
+                            <p>Register data</p>
+                            <p>Generate summary, button</p>
+                            <p>the PayPal Experience</p>
+                            <p>PP return message</p>
+                            <p>OK and save orderID, UID</p>
+                            <p>Save final delegate details</p>
+                            <p>Generate invoice</p>
+                            <p>Send thanks email</p>
+                            
+                            <p>OR cancel - redirect and ask "are you sure?"</p>
+                        </aside>
+                    </section>
                     
                 </section>
                 
@@ -514,19 +687,53 @@ handling_amount=0.00&amp;transaction_subject=&amp;payment_gross=19.95&amp;shippi
                 
                 
                 
-                <!-- Admin interface, demojam -->
-                
-                <!-- MUK 2019 went reasonably well but some issues with Paypal etc -->
-                
-                
-                
+                <!-- Improvements, admin interface, demojam -->
+                <section>
+                    
+                    <!-- Becoming -->
+                    <section>
+                        <!-- Suitable image and heading -->
+                    </section>
+                    
+                    
+                    <!-- Revisions, additions -->
+                    <section>
+                        <!-- Image of complex spells -->
+                        
+                        <aside class="notes">
+                            <p>Functions</p>
+                            <p>More functions</p>
+                            <p>Bypass PP for speakers (£0)</p>
+                            <p>Hack XQ and XSL for groups</p>
+                        </aside>
+                    </section>
+                    
+                    
+                    <!-- Admin UI -->
+                    <section>
+                        <!-- Admin page image -->
+                    </section>
+                    
+                    
+                    <!-- Demojam -->
+                    <section>
+                        <!-- Demojam XForms -->
+                        
+                        <aside class="notes">
+                            <p>Wouldn't it be cool if...?</p>
+                            <p>Admin</p>
+                            <p>Voting page</p>
+                            <p>XQ in eXist-DB</p>
+                        </aside>
+                    </section>
+                </section>
                 
                 
                 
                 
                 <!-- START of Code Example -->
                 
-                <section>
+                <!--<section>
                     
                     <section>
                         <h3></h3>
@@ -545,7 +752,7 @@ handling_amount=0.00&amp;transaction_subject=&amp;payment_gross=19.95&amp;shippi
                         </aside>
                     </section>
                     
-                </section>
+                </section>-->
                 
                 <!-- END of Code Example -->
                 
@@ -560,13 +767,28 @@ handling_amount=0.00&amp;transaction_subject=&amp;payment_gross=19.95&amp;shippi
                     
                     <section>
                         
-                        <h3>Conclusions</h3>
+                        <h3>What I Learned</h3>
+                        
+                        <!-- MUK 2019 went reasonably well but some issues with Paypal etc -->
+                        <!-- MacOS - wtf? -->
+                        <!-- Proper listener -->
+                        <!-- Demojam rough edges -->
+                        
+                        <!-- It's all doable - yes, we CAN -->
                         
                         <!--<ul>
-                            <li class="fragment">It's doable!</li>
-                            <li class="fragment">Manual selections necessary</li>
-                            <li class="fragment">Most problems cultural/political rather than technical</li>
+                            <li class="fragment"></li>
+                            <li class="fragment"></li>
+                            <li class="fragment"></li>
                         </ul>-->
+                    </section>
+                    
+                    <section>
+                        <h3>Next Year</h3>
+                        
+                        <!-- A proper listener -->
+                        <!-- Alain C says we can do PP in XForms -->
+                        <!-- Reports, configs,  -->
                     </section>
                     
                     <section>
