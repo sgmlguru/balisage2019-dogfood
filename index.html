@@ -564,6 +564,7 @@ return
                     
                     <section>
                         <!-- Image of a deaf old man? -->
+                        <img src="img/train-deaf-dog.jpg" alt="Training a deaf dog book cover" style="width: 40%; vertical-align: middle;"/>
                         
                         <aside class="notes">
                             <p>But no matter what, I couldn't get PP's IPN Simulator to work</p>
@@ -587,9 +588,11 @@ return
                     
                     <!-- About Adam's listener -->
                     <section>
-                        <pre class="stretch">
+                        <!--<pre class="stretch">
                             <code class="http" data-trim data-noescape></code>
-                        </pre>
+                        </pre>-->
+                        
+                        <img src="img/adam-listener.png" alt="Adam's listener" style="width: 60%; vertical-align: middle;"/>
                         
                         <aside class="notes">
                             <p>Basically a RESTXQ version of one of the listeners listed as examples</p>
@@ -600,7 +603,7 @@ return
                     
                     <!-- Encode type -->
                     <section>
-                        <pre class="stretch">
+                        <pre>
                             <code class="http" data-trim data-noescape>application/x-www-form-urlencoded</code>
                         </pre>
                         
@@ -617,7 +620,7 @@ return
                     <!-- My dead simple listener -->
                     <section>
                         <pre class="stretch">
-                            <code class="xquery" data-trim data-noescape>>declare
+                            <code class="xquery" data-trim data-noescape>declare
     %rest:POST("{$body}")
     %rest:path("/paypal-transaction-complete")
 function pay:listener($body) {
@@ -665,6 +668,7 @@ declare function pay:all-good(){
                     <!-- Layout #2 -->
                     <section>
                         <!-- Image of entire procedure, with form, thanks.xquery, cancel.xquery, listener, email, invoice, etc -->
+                        <img src="img/working.jpg" alt="Working PayPal workflow" style="width: 80%; vertical-align: middle;"/>
                         
                         <aside class="notes">
                             <p>Register data</p>
@@ -686,6 +690,8 @@ declare function pay:all-good(){
                 
                 
                 
+                
+                <!-- START of Improvements -->
                 
                 <!-- Improvements, admin interface, demojam -->
                 <section>
@@ -735,33 +741,7 @@ declare function pay:all-good(){
                     </section>
                 </section>
                 
-                
-                
-                
-                <!-- START of Code Example -->
-                
-                <!--<section>
-                    
-                    <section>
-                        <h3></h3>
-                        
-                        
-                    </section>
-                    
-                    <section style="font-size: 26pt">
-                        <h5></h5>
-                        <pre class="stretch">
-                            <code class="xml" data-trim data-noescape>EXAMPLE CODE HERE</code>
-                            </pre>
-                        
-                        <aside class="notes">
-                            <p></p>
-                        </aside>
-                    </section>
-                    
-                </section>-->
-                
-                <!-- END of Code Example -->
+                <!-- END of Improvements -->
                 
                 
                 
@@ -769,8 +749,6 @@ declare function pay:all-good(){
                 <!-- START of Conclusions -->
                 
                 <section>
-                    
-                    <!-- style="color: white" data-background="img/riksdagshuset.png" -->
                     
                     <section>
                         
