@@ -128,7 +128,7 @@
                     
                     <!-- Cumbersome and difficult to get paid -->
                     <section data-background="img/past-due.jpg" data-background-size="100%">
-                        <h3 class="fragment" style="vertical-align: bottom">So, How Do You Get Paid?</h3>
+                        <!--<h3 class="fragment" style="vertical-align: bottom">So, How Do You Get Paid?</h3>-->
                     </section>
                     
                     
@@ -271,10 +271,10 @@
                     
                     
                     <section>
-                        <h3>An Aside</h3>
-                        <h5>Sandbox/Live</h5>
+                        <h3>Sandbox/Live</h3>
                         
                         <!-- Image of a sandbox? -->
+                        <img src="img/Bal2019nord0128-2.png" alt="Sandbox and live collections in eXist-DB" style="width: 30%;vertical-align: middle;"/>
                         
                         <aside class="notes">
                             <p>Two envs, one for testing, one for live</p>
@@ -311,7 +311,8 @@
                         </pre>
                         
                         <aside class="notes">
-                            <p>A LOT of buttons</p>
+                            <p>This will quickly result in a LOT of buttons</p>
+                            <p>Every time we need a discount, we need to generate two sets of buttons</p>
                         </aside>
                     </section>
                     
@@ -338,7 +339,7 @@
                 
                 <section>
                     
-                    <section data-background="img/paypal-dev-doc-stepbystep.png" data-background-size="100%">
+                    <section data-background="img/paypal-dev-doc-stepbystep-lighter.jpg" data-background-size="100%">
                         <h3>PayPal Developer Documentation</h3>
                         
                         <aside class="notes">
@@ -485,11 +486,23 @@ onCancel: function(data, actions) {{
                         <pre class="stretch">
                             <code class="http" data-trim data-noescape>verify_sign=AtkOfCXbDm2hu0ZELryHFjY-Vb7PAUvS6nMXgysbElEn9v-1XcmSoGtf&amp;
 payer_email=gpmac_1231902590_per%40paypal.com&amp;
-txn_id=61E67681CH3238416&amp;payment_type=instant&amp;last_name=User&amp;
-address_state=CA&amp;receiver_email=gpmac_1231902686_biz%40paypal.com&amp;payment_fee=0.88&amp;
-receiver_id=S8XGHLYDW9T3S&amp;txn_type=express_checkout&amp;item_name=&amp;
-mc_currency=USD&amp;item_number=&amp;residence_country=US&amp;test_ipn=1&amp;
-handling_amount=0.00&amp;transaction_subject=&amp;payment_gross=19.95&amp;shipping=0.00</code>
+txn_id=61E67681CH3238416&amp;
+payment_type=instant&amp;
+last_name=User&amp;
+address_state=CA&amp;
+receiver_email=gpmac_1231902686_biz%40paypal.com&amp;
+payment_fee=0.88&amp;
+receiver_id=S8XGHLYDW9T3S&amp;
+txn_type=express_checkout&amp;
+item_name=&amp;
+mc_currency=USD&amp;
+item_number=&amp;
+residence_country=US&amp;
+test_ipn=1&amp;
+handling_amount=0.00&amp;
+transaction_subject=&amp;
+payment_gross=19.95&amp;
+shipping=0.00</code>
                         </pre>
                         
                         
@@ -509,6 +522,8 @@ handling_amount=0.00&amp;transaction_subject=&amp;payment_gross=19.95&amp;shippi
                         
                         <aside class="notes">
                             <p>I'd no idea what a listener is, beyond the concept</p>
+                            <p>PP provides an IPN Simulator</p>
+                            <p>So I wrote an HTML form</p>
                         </aside>
                     </section>
                     
@@ -519,7 +534,7 @@ handling_amount=0.00&amp;transaction_subject=&amp;payment_gross=19.95&amp;shippi
                             <code class="xml" data-trim data-noescape>&lt;form
     target="_new"
     method="post"
-    action="http://localhost:8080/exist/rest/db/apps/test/test.xquery"
+    action="http://localhost:8080/exist/rest/db/test/test.xquery"
     enctype="multipart/form-data">
 
     &lt;input type="hidden" name="payer_id" value="LPLWNMTBWMFAY"/>
@@ -533,8 +548,7 @@ handling_amount=0.00&amp;transaction_subject=&amp;payment_gross=19.95&amp;shippi
                         </pre>
                         
                         <aside class="notes">
-                            <p>PP provides an IPN Simulator</p>
-                            <p>So I wrote this form, pointing out THIS XQUERY...</p>
+                            <p>Form pointed out THIS XQUERY...</p>
                         </aside>
                     </section>
                     
@@ -721,22 +735,52 @@ declare function pay:all-good(){
                     
                     <!-- Admin UI -->
                     <section>
+                        <h3>Admin Page</h3>
+                        
                         <!-- Admin page image -->
                         <img src="img/Bal2019nord0128-3.png" alt="Admin UI" style="width: 40%; vertical-align: middle;"/>
                         
+                        <aside class="notes">
+                            <p>This allows us to quickly set up the eXist env</p>
+                        </aside>
+                    </section>
+                    
+                    
+                    <!-- Types of tickets, discounts -->
+                    <section>
+                        <h3>Set Amounts and Discounts</h3>
+                        
+                        <!-- Admin page image -->
+                        <img src="img/Bal2019nord0128-4.png" alt="Admin UI" style="width: 40%; vertical-align: middle;"/>
+                        
+                        <aside class="notes">
+                            <p>Since we have <code>$amount</code></p>
+                            <p>This allows us to easily add ticket types and discounts to a lookup</p>
+                        </aside>
+                    </section>
+                    
+                    
+                    <!-- Photo from demojam session? -->
+                    <section>
+                        <h3>Demojam Session</h3>
+                        
+                        <!-- Demojam image -->
+                        <img src="img/demojam-train.jpg" alt="Demojam, John Lumley's train app" style="width: 40%; vertical-align: middle;"/>
                     </section>
                     
                     
                     <!-- Demojam -->
                     <section>
+                        <h3>Demojam Voting App</h3>
+                        
                         <!-- Demojam XForms -->
                         <img src="img/Bal2019nord0128-5.png" alt="Demojam voting page" style="width: 40%; vertical-align: middle;"/>
                         
                         <aside class="notes">
                             <p>Wouldn't it be cool if...?</p>
-                            <p>Admin</p>
+                            <p>Add presenters admin page</p>
                             <p>Voting page</p>
-                            <p>XQ in eXist-DB</p>
+                            <p>XForms and XQ in eXist-DB</p>
                         </aside>
                     </section>
                 </section>
@@ -760,24 +804,31 @@ declare function pay:all-good(){
                         <!-- Demojam rough edges -->
                         
                         <!-- It's all doable - yes, we CAN -->
+                        <img src="img/dog-strategy.jpg" alt="Dog strategy discussion" style="width: 40%; vertical-align: middle;"/>
                         
-                        <ul>
-                            <li class="fragment">Some issues with PayPal (Mac OS)</li>
-                            <li class="fragment">Listener not really a listener</li>
-                            <li class="fragment">Demojam app rough edges (voting fraud!)</li>
-                        </ul>
+                        <aside class="notes">
+                            <ul>
+                                <li>Some issues with PayPal (Mac OS)</li>
+                                <li>Listener not really a listener</li>
+                                <li>Demojam app rough edges (voting fraud!)</li>
+                            </ul>
+                            <p>It's all doable - YES WE CAN!</p>
+                        </aside>
                     </section>
                     
-                    <section>
+                    <!--<section>
                         <h3>It's All Doable</h3>
-                        <h5>(What Could Possibly Go Wrong?)</h5>
                         
-                        <img src="img/monster-fantasia.jpg" alt="Fantasia monster"/>
+                        <!-\-<h5>(What Could Possibly Go Wrong?)</h5>
                         
-                        <!-- A proper listener -->
-                        <!-- Alain C says we can do PP in XForms -->
-                        <!-- Reports, configs,  -->
-                    </section>
+                        <img src="img/monster-fantasia.jpg" alt="Fantasia monster"/>-\->
+                        
+                        <!-\-<img src="img/dog-strategy.jpg" alt="Dog strategy discussion" style="width: 40%; vertical-align: middle;"/>-\->
+                        
+                        <!-\- A proper listener -\->
+                        <!-\- Alain C says we can do PP in XForms -\->
+                        <!-\- Reports, configs,  -\->
+                    </section>-->
                     
                     <section>
                         <h2>Thank You!</h2>
