@@ -339,7 +339,7 @@
                         
                         <aside class="notes">
                             <p>This will quickly result in a LOT of buttons</p>
-                            <p>Every time we need a discount, we need to generate two sets of buttons</p>
+                            <p>Fpr every new discount, we must generate two sets of buttons</p>
                         </aside>
                     </section>
                     
@@ -621,21 +621,18 @@ return
                     
                     <!-- About Adam's listener -->
                     <section>
-                        <!--<pre class="stretch">
-                            <code class="http" data-trim data-noescape></code>
-                        </pre>-->
-                        
                         <img src="img/adam-listener.png" alt="Adam's listener" style="width: 60%; vertical-align: middle;"/>
                         
                         <aside class="notes">
                             <p>Basically a RESTXQ version of one of the listeners listed as examples</p>
-                            <p>While the IPN Sim worked, I still couldn't extract info locally</p>
+                            <p>While the IPN Sim worked, I still couldn't extract info to eXist-DB</p>
+                            <p>Encoding diffs. Tests. I was eventually able to produce me.</p>
                         </aside>
                     </section>
                     
                     
                     <!-- Encode type -->
-                    <section>
+                    <!--<section>
                         <pre>
                             <code class="http" data-trim data-noescape>application/x-www-form-urlencoded</code>
                         </pre>
@@ -647,7 +644,7 @@ return
                             <p>As far as I can determine, though, the listener should work</p>
                             <p>So based on what Adam wrote and my understanding of it, I was able to eventually produce this</p>
                         </aside>
-                    </section>
+                    </section>-->
                     
                     
                     <!-- My dead simple listener -->
@@ -716,7 +713,7 @@ onCancel: function(data, actions) {{
                     </section>
                     
                     
-                    <!-- Plan #2, it works! -->
+                    <!-- It works! -->
                     <section>
                         <!-- Sandbox transactions -->
                         <img src="img/Bal2019nord0128-6.png" alt="PP sandbox payments" style="width: 80%; vertical-align: middle;"/>
@@ -732,14 +729,12 @@ onCancel: function(data, actions) {{
                         <img src="img/working.jpg" alt="Working PayPal workflow" style="width: 80%; vertical-align: middle;"/>
                         
                         <aside class="notes">
-                            <p>Register data</p>
+                            <p>Register</p>
                             <p>Generate summary, button</p>
-                            <p>the PayPal Experience</p>
-                            <p>PP return message</p>
-                            <p>OK and save orderID, UID</p>
-                            <p>Save final delegate details</p>
-                            <p>Generate invoice</p>
-                            <p>Send thanks email</p>
+                            <p>The PayPal Experience</p>
+                            <p>Save orderID, UID</p>
+                            <p>Confirm final delegate details</p>
+                            <p>Generate invoice, send it in email</p>
                             
                             <p>OR cancel - redirect and ask "are you sure?"</p>
                         </aside>
@@ -761,8 +756,6 @@ onCancel: function(data, actions) {{
                     <!-- Fantasia broom working -->
                     <section data-background="img/fantasia-broom.jpg" data-background-size="100%">
                         <h3 style="text-align: left; color: white;">Now That I'm A Programmer...</h3>
-                        
-                        <!--<img src="img/fantasia-broom.jpg" alt="fantasia broom cleaning up"/>-->
                         
                         <aside class="notes">
                             <p>Functions</p>
@@ -863,7 +856,7 @@ onCancel: function(data, actions) {{
                                 <li>Listener not really a listener</li>
                                 <li>Demojam app rough edges (voting fraud!)</li>
                             </ul>
-                            <p>Helpful community:</p>
+                            <p>Other dog food and helpful community:</p>
                             <ul>
                                 <li>XSL-FO</li>
                                 <li>XForms</li>
@@ -873,19 +866,6 @@ onCancel: function(data, actions) {{
                         </aside>
                     </section>
                     
-                    <!--<section>
-                        <h3>It's All Doable</h3>
-                        
-                        <!-\-<h5>(What Could Possibly Go Wrong?)</h5>
-                        
-                        <img src="img/monster-fantasia.jpg" alt="Fantasia monster"/>-\->
-                        
-                        <!-\-<img src="img/dog-strategy.jpg" alt="Dog strategy discussion" style="width: 40%; vertical-align: middle;"/>-\->
-                        
-                        <!-\- A proper listener -\->
-                        <!-\- Alain C says we can do PP in XForms -\->
-                        <!-\- Reports, configs,  -\->
-                    </section>-->
                     
                     
                     <!-- Conclusions and thanks -->
