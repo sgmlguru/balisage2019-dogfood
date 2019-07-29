@@ -239,7 +239,7 @@
                     <section>
                         <h3>Generating Button Code</h3>
                         
-                        <img src="img/generate-buttons.png" alt="PayPal generate buttons" style="width: 60%;vertical-align: middle;"/>
+                        <img src="img/generate-buttons.png" alt="PayPal generate buttons" style="width: 80%;vertical-align: middle;"/>
                         
                         <aside class="notes">
                             <p>PayPal sandbox has a generate buttons page</p>
@@ -365,6 +365,8 @@
                     
                     <!-- The button with amount -->
                     <section>
+                        <h3>I Found This Example</h3>
+                        
                         <pre class="stretch">
                             <code class="javascript">&lt;script>
   paypal.Buttons({
@@ -481,6 +483,8 @@ onCancel: function(data, actions) {{
                                     <p>Listener sends back copy of IPN (etc)</p>
                                 </li>
                             </ol>
+                            
+                            <p>The idea being that you can then query PP for any transaction details.</p>
                         </aside>
                         
                     </section>
@@ -536,6 +540,8 @@ shipping=0.00</code>
                     
                     <!-- Something about failed IPN listener attempts? -->
                     <section>
+                        <h3>I Created a Test Form</h3>
+                        
                         <pre class="stretch">
                             <code class="xml" data-trim data-noescape>&lt;form
     target="_new"
@@ -560,6 +566,8 @@ shipping=0.00</code>
                     
                     
                     <section>
+                        <h3>Pointing Out This XQuery</h3>
+                        
                         <pre class="stretch">
                             <code class="xquery" data-trim data-noescape>xquery version "3.1";
 declare namespace exist = "http://exist.sourceforge.net/NS/exist";
@@ -588,6 +596,7 @@ return
                         
                         <aside class="notes">
                             <p>But no matter what, I couldn't get PP's IPN Simulator to work</p>
+                            <p>So I sent out a desperate cry for help</p>
                         </aside>
                     </section>
                     
@@ -596,11 +605,13 @@ return
                     
                     <!-- Adam to the rescue -->
                     <section>
+                        <h3>Help Me (You're My Only Hope)</h3>
+                        
                         <img src="img/paris.jpg" alt="Paris balcony view"/>
                         
                         <aside class="notes">
-                            <p>Copy/paste from Stack Overflow didn't work so I asked for help</p>
-                            <p>Adam Retter replied within hours</p>
+                            <p>I knew this guy who's really good at XQ, eXist, and an international man of mystery</p>
+                            <p>He was travelling Europe but replied within hours</p>
                             <p>Always imagined him writing the code on a napkin while on holiday</p>
                         </aside>
                     </section>
@@ -613,7 +624,7 @@ return
                         <aside class="notes">
                             <p>Basically a RESTXQ version of one of the listeners listed as examples</p>
                             <p>While the IPN Sim worked, I still couldn't extract info to eXist-DB</p>
-                            <p>Encoding diffs. Tests. I was eventually able to produce me.</p>
+                            <p>Encoding diffs. Tests. A bare-bones listener, sort of.</p>
                         </aside>
                     </section>
                     
@@ -636,6 +647,8 @@ return
                     
                     <!-- My dead simple listener -->
                     <section>
+                        <h3>My Simple "Listener"</h3>
+                        
                         <pre class="stretch" style="font-size: 15pt;">
                             <code class="xquery" data-trim data-noescape>declare
     %rest:POST("{$body}")
@@ -666,6 +679,7 @@ declare function pay:all-good(){
                         <aside class="notes">
                             <p>This, of course, is not a full listener</p>
                             <p>A *listener* listens UNTIL it gets the OK and a verbatim copy of the IPN (which it sends back with an added string)</p>
+                            <p>PP needs that process if you want your back end to talk to theirs.</p>
                             <p>This does not repeat anything, it merely says OK and saves two parameters</p>
                             <p>Still don't fully understand this; did I mention my ignorance?</p>
                         </aside>
@@ -673,6 +687,8 @@ declare function pay:all-good(){
                     
                     
                     <section>
+                        <h3>Adding The Endpoint</h3>
+                        
                         <pre class="stretch" style="font-size: 15pt;">
                             <code class="javascript">onApprove: function(data, actions) 
     ...
