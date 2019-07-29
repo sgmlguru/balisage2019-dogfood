@@ -368,14 +368,14 @@
                         <h3>I Found This Example</h3>
                         
                         <pre class="stretch">
-                            <code class="javascript">&lt;script>
+                            <code class="javascript" data-noescape>&lt;script>
   paypal.Buttons({
     createOrder: function(data, actions) {
       // Set up the transaction
       return actions.order.create({
         purchase_units: [{
           amount: {
-            value: '0.01'
+            <span class="fragment highlight-red">value: &apos;0.01&apos;</span>
           }
         }]
       });
@@ -392,13 +392,13 @@
                     
                     <!-- Injecting XQuery into JavaScript -->
                     <section>
-                        <pre>
+                        <!--<pre>
                             <code class="javascript">amount: {
     value: '0.01'
 }</code>
-                        </pre>
+                        </pre>-->
                         
-                        <pre class="fragment">
+                        <pre>
                             <code class="javascript">amount: {
     value: '{$amount}'
 }</code>
@@ -690,12 +690,12 @@ declare function pay:all-good(){
                         <h3>Adding The Endpoint</h3>
                         
                         <pre class="stretch" style="font-size: 15pt;">
-                            <code class="javascript">onApprove: function(data, actions) 
+                            <code class="javascript" data-trim data-noescape>onApprove: function(data, actions) 
     ...
     
     // Call your server to save the transaction
     return fetch(
-        '{$muk:config//domain}/exist/restxq/paypal-transaction-complete', {{
+        '{<span class="highlight-red">$muk:config//domain}/exist/restxq/paypal-transaction-complete</span>', {{
       method: 'post',
       body: JSON.stringify({{
         orderID: data.orderID,
@@ -718,13 +718,17 @@ onCancel: function(data, actions) {{
                     
                     <!-- It works! -->
                     <section>
+                        <h3>And It All Started Working</h3>
+                        
                         <!-- Sandbox transactions -->
                         <img src="img/Bal2019nord0128-6.png" alt="PP sandbox payments" style="width: 80%; vertical-align: middle;"/>
                         
                         <aside class="notes">
+                            <p>Again, it doesn't actually do everything that a proper IPN listener does</p>
                             <p>NEVERTHELESS, this gives me the order ID and the user ID (which I use to couple the transaction with the delegate)</p>
                         </aside>
                     </section>
+                    
                     
                     <!-- Layout #2 -->
                     <section>
